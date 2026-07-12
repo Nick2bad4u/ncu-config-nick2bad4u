@@ -96,6 +96,11 @@
         "update-deps": "ncu --configFileName .ncurc.json --configFilePath . && npm update --force && npm install --force && npm run sync:node-version-files",
         "verify": "npm run release:verify"
     },
+    "overrides": {
+        "tsup": {
+            "esbuild": "0.28.1"
+        }
+    },
     "devDependencies": {
         "@arethetypeswrong/cli": "^0.18.5",
         "@microsoft/tsdoc-config": "^0.18.1",
