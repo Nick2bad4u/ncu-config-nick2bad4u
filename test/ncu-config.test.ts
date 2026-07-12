@@ -84,16 +84,27 @@ const runNcu = (consumerRoot: string, configFileName: string): unknown => {
 };
 
 describe("ncu shared configs", () => {
-    it("loads both bundled presets with the intended workspace modes", async () => {
-        expect.assertions(6);
+    it("loads both presets with shared policy and intended workspace modes", async () => {
+        expect.assertions(12);
 
         const standardConfig = await loadNcuConfig();
         const workspaceConfig = await loadNcuConfig("workspaces");
+        const { root: workspaceRoot, ...workspaceSharedConfig } =
+            workspaceConfig;
 
         expect(path.isAbsolute(ncuConfigPath)).toBe(true);
         expect(path.isAbsolute(ncuWorkspacesConfigPath)).toBe(true);
         expect(standardConfig.workspaces).toBe(false);
         expect(workspaceConfig.workspaces).toBe(true);
+        expect(workspaceRoot).toBe(true);
+        expect(workspaceSharedConfig).toStrictEqual({
+            ...standardConfig,
+            workspaces: true,
+        });
+        expect(standardConfig.deep).toBe(false);
+        expect(standardConfig.install).toBe("never");
+        expect(standardConfig.reject).toStrictEqual(["typescript"]);
+        expect(standardConfig.upgrade).toBe(true);
         expect(standardConfig).not.toHaveProperty("configFileName");
         expect(workspaceConfig).not.toHaveProperty("configFilePath");
     });
@@ -115,12 +126,16 @@ describe("ncu shared configs", () => {
 
         try {
             await writeJson(packagePath, {
-                dependencies: { "fixture-package": "1.0.0" },
+                dependencies: {
+                    "fixture-package": "1.0.0",
+                    typescript: "6.0.3",
+                },
                 name: "ncu-standard-consumer",
                 private: true,
             });
             await writeJson(path.join(consumerRoot, "registry.json"), {
                 "fixture-package": "2.0.0",
+                typescript: "7.0.0",
             });
 
             const upgraded = runNcu(consumerRoot, ncuConfigFileName);
@@ -135,7 +150,7 @@ describe("ncu shared configs", () => {
     });
 
     it("runs the workspace preset across root and workspace manifests", async () => {
-        expect.assertions(2);
+        expect.assertions(3);
 
         const consumerRoot = await createConsumer();
         const workspaceRoot = path.join(consumerRoot, "packages", "fixture");
@@ -143,7 +158,10 @@ describe("ncu shared configs", () => {
         try {
             await mkdir(workspaceRoot, { recursive: true });
             await writeJson(path.join(consumerRoot, "package.json"), {
-                dependencies: { "root-package": "1.0.0" },
+                dependencies: {
+                    "root-package": "1.0.0",
+                    typescript: "6.0.3",
+                },
                 name: "ncu-workspace-consumer",
                 private: true,
                 workspaces: ["packages/*"],
@@ -156,6 +174,7 @@ describe("ncu shared configs", () => {
             });
             await writeJson(path.join(consumerRoot, "registry.json"), {
                 "root-package": "2.0.0",
+                typescript: "7.0.0",
                 "workspace-package": "3.0.0",
             });
 
@@ -169,6 +188,7 @@ describe("ncu shared configs", () => {
                 ["packages/fixture/package.json", "workspace-package"],
                 "3.0.0"
             );
+            expect(upgraded).not.toHaveProperty(["package.json", "typescript"]);
         } finally {
             await rm(consumerRoot, { force: true, recursive: true });
         }

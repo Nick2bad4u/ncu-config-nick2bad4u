@@ -39,6 +39,9 @@
     "pre": false,
     "registry": "https://registry.npmjs.org/",
     "registryType": "npm",
+    "reject": [
+        "typescript"
+    ],
     "removeRange": false,
     "retry": 3,
     "root": true,

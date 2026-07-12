@@ -9,6 +9,7 @@ Use this checklist when updating npm-check-updates or changing either shared pre
 - [ ] Confirm `.ncurc.json` keeps `workspaces: false`.
 - [ ] Confirm `.ncurc.workspaces.json` keeps `workspaces: true`, `root: true`, and `deep: false`.
 - [ ] Keep shared values identical between the presets unless the difference is workspace-specific.
+- [ ] Review every entry in `reject`, document why it is held back, and cover it in both CLI fixtures.
 - [ ] Check that doctor/install commands are portable npm commands rather than repository-specific scripts.
 
 ## Package and consumers
@@ -16,6 +17,7 @@ Use this checklist when updating npm-check-updates or changing either shared pre
 - [ ] Keep both dotfiles in `package.json#files` and `package.json#exports`.
 - [ ] Keep the npm-check-updates peer range aligned with the oldest version verified by tests.
 - [ ] Update the typed paths/loaders and README when a preset is renamed.
+- [ ] Keep `docs/CONFIGURATION.md` aligned with the exact published policy.
 - [ ] Run the standard and workspace CLI fixture tests without network access or manifest mutation.
 - [ ] Run `npm pack --dry-run --json` and confirm both presets and built declarations are included.
 

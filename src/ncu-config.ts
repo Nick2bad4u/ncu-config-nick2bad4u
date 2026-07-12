@@ -32,7 +32,7 @@ export const ncuWorkspacesConfigPath: string = fileURLToPath(
 const isRecord = (value: unknown): value is NcuConfigRecord =>
     typeof value === "object" && value !== null && !Array.isArray(value);
 
-/** Load and validate one of the bundled NCU presets. */
+/** Load a bundled NCU preset and verify its workspace mode. */
 export async function loadNcuConfig(
     mode: NcuConfigMode = "standard"
 ): Promise<NcuConfig> {
