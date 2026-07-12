@@ -1,7 +1,7 @@
 {
     "$schema": "https://typedoc.org/schema.json",
     "entryPoints": [
-        "src/tooling-baseline.ts"
+        "src/ncu-config.ts"
     ],
     "extends": [
         "typedoc-config-nick2bad4u"

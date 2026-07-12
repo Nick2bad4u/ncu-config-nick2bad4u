@@ -1,6 +1,6 @@
 ---
 name: Bug report
-about: Report a reproducible bug in nick2bad4u-repo-template
+about: Report a reproducible bug in ncu-config-nick2bad4u
 title: "Bug: "
 labels:
  - bug
@@ -12,28 +12,28 @@ assignees: []
 
 <!-- Briefly describe the bug and impact. -->
 
-## Rule / Area
+## Config / Area
 
-<!-- Example: prefer-ts-extras-array-at, docs/docusaurus, presets, runtime API docs -->
+<!-- Example: standard preset, workspace preset, loader API, migration -->
 
 ## Reproduction
 
-### Flat config snippet
+### package.json and command
 
 ```mjs
-// Minimal eslint.config.mjs (or relevant excerpt)
+// Minimal package.json (or relevant excerpt)
 ```
 
-### Minimal code sample
+### NCU config or dependency sample
 
 ```ts
-// Minimal reproducible input
+// Minimal reproducible dependency/config input
 ```
 
 ### Command and output
 
 ```bash
-# Example: npm run test -- test/prefer-ts-extras-array-at.test.ts
+# Example: npm run update-deps
 ```
 
 ## Steps to reproduce
@@ -50,10 +50,8 @@ assignees: []
 
 - Node.js version:
 - npm version:
-- ESLint version:
-- TypeScript version:
-- `@typescript-eslint/*` version:
-- `nick2bad4u-repo-template` version/commit:
+- npm-check-updates version:
+- `ncu-config-nick2bad4u` version/commit:
 - OS:
 
 ## Additional context

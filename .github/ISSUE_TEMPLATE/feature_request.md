@@ -1,6 +1,6 @@
 ---
 name: Feature request
-about: Suggest a new rule or improvement for nick2bad4u-repo-template
+about: Suggest a config or package improvement for ncu-config-nick2bad4u
 title: "Feature: "
 labels:
  - enhancement
@@ -18,29 +18,29 @@ assignees: []
 
 ## Scope
 
-- Type: New rule / Rule enhancement / Config preset / Docs / Tooling
-- Affected rule IDs (if any):
-- Requires type checking?: Yes / No / Unsure
+- Type: Standard preset / Workspace preset / Package API / Docs / Tooling
+- Affected NCU options:
+- Changes consumer manifests?: Yes / No / Unsure
 
 ## Alternatives considered
 
 ## Examples
 
-### Before
+### Current behavior
 
 ```ts
-// Code that should be reported (if applicable)
+// Current config or command
 ```
 
-### After
+### Proposed behavior
 
 ```ts
-// Desired code after fix/suggestion
+// Proposed config or command
 ```
 
 ## Acceptance criteria
 
-- [ ] Clear, actionable diagnostic message(s)
-- [ ] Safe autofix or suggestion behavior defined
-- [ ] Test coverage plan (valid/invalid/edge/fixer)
-- [ ] Documentation impact identified (`docs/rules/<rule-id>.md` if rule-related)
+- [ ] Standard and workspace impact is explicit
+- [ ] Manifest mutation behavior is understood
+- [ ] Consumer CLI test coverage is defined
+- [ ] README and migration impact is identified

@@ -41,10 +41,11 @@
     "registryType": "npm",
     "removeRange": false,
     "retry": 3,
+    "root": true,
     "silent": false,
     "target": "latest",
     "timeout": 0,
     "upgrade": true,
     "verbose": false,
-    "workspaces": false
+    "workspaces": true
 }

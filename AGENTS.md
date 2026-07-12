@@ -1,31 +1,29 @@
 # Repository Instructions
 
-This repository is a reusable starter for Nick2bad4u npm/TypeScript projects.
-Treat the root files as the GitHub template payload.
+This repository publishes two shared npm-check-updates configurations for use directly from `node_modules`.
 
 ## Priorities
 
-- Preserve the shared tooling defaults unless a target repository has a clear reason to opt out.
-- Prefer repository scripts over ad hoc commands in GitHub Actions.
-- Keep generated output, dependency folders, build artifacts, and local reports out of commits.
-- Do not weaken security scanners or release gates to make CI pass.
-- Keep workflow permissions least-privilege and keep third-party actions pinned by SHA where already pinned.
+- Keep `.ncurc.json` and `.ncurc.workspaces.json` aligned except for intentional workspace behavior.
+- Do not embed `configFileName` or `configFilePath` in either preset; consumers supply those discovery flags.
+- Preserve consumer-owned package paths and repository-specific dependency filters.
+- Verify option changes against the installed npm-check-updates version and its official schema.
+- Keep both raw configs, the typed helper, documentation, and consumer smoke tests synchronized.
+- Do not weaken security scanners, release gates, workflow permissions, or action pinning.
 
 ## Common Commands
 
 ```bash
-npm run setup:template -- --name my-package --description "Package description"
+npm run build
 npm run lint:all
 npm run typecheck
 npm run test
 npm run release:verify
 ```
 
-## Tooling Baseline
+## Published Surface
 
-- Node is controlled by `.node-version`, `.nvmrc`, and `package.json#engines`.
-- npm is controlled by `packageManager`.
-- ESLint extends `eslint-config-nick2bad4u`.
-- Prettier extends `prettier-config-nick2bad4u`.
-- Package JSON, Secretlint, Remark, Yamllint, TSDoc, Gitleaks, TypeScript, Vitest, and TypeDoc configs are included.
-- GitHub Actions use local scripts for validation and caller workflows for shared security/dependency automation.
+- `.ncurc.json` is the non-workspace preset.
+- `.ncurc.workspaces.json` checks the root and declared npm workspaces.
+- `src/ncu-config.ts` exposes typed file names, resolved paths, parsing, and loading helpers.
+- Consumers invoke `ncu` with separate `--configFileName` and `--configFilePath` arguments.

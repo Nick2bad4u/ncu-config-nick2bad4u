@@ -1,37 +1,44 @@
 {
     "$schema": "https://www.schemastore.org/package.json",
-    "name": "nick2bad4u-repo-template",
+    "name": "ncu-config-nick2bad4u",
     "version": "0.1.0",
-    "private": true,
-    "description": "Reusable starter repository for Nick2bad4u TypeScript/npm projects.",
+    "private": false,
+    "description": "Shared npm-check-updates configurations for Nick2bad4u npm repositories.",
     "keywords": [
-        "github-template",
-        "typescript",
         "npm",
-        "tooling"
+        "npm-check-updates",
+        "ncu",
+        "shared-config",
+        "workspaces"
     ],
-    "homepage": "https://github.com/Nick2bad4u/nick2bad4u-repo-template",
+    "homepage": "https://github.com/Nick2bad4u/ncu-config-nick2bad4u#readme",
     "bugs": {
-        "url": "https://github.com/Nick2bad4u/nick2bad4u-repo-template/issues"
+        "url": "https://github.com/Nick2bad4u/ncu-config-nick2bad4u/issues"
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/Nick2bad4u/nick2bad4u-repo-template.git"
+        "url": "git+https://github.com/Nick2bad4u/ncu-config-nick2bad4u.git"
     },
     "license": "MIT",
     "author": "Nick2bad4u <20943337+Nick2bad4u@users.noreply.github.com> (https://github.com/Nick2bad4u)",
     "contributors": [
         "Nick2bad4u <20943337+Nick2bad4u@users.noreply.github.com> (https://github.com/Nick2bad4u)"
     ],
+    "sideEffects": false,
     "type": "module",
     "exports": {
         ".": {
-            "types": "./dist/tooling-baseline.d.ts",
-            "default": "./dist/tooling-baseline.js"
-        }
+            "types": "./dist/ncu-config.d.ts",
+            "default": "./dist/ncu-config.js"
+        },
+        "./.ncurc.json": "./.ncurc.json",
+        "./.ncurc.workspaces.json": "./.ncurc.workspaces.json",
+        "./package.json": "./package.json"
     },
-    "types": "./dist/tooling-baseline.d.ts",
+    "types": "./dist/ncu-config.d.ts",
     "files": [
+        ".ncurc.json",
+        ".ncurc.workspaces.json",
         "dist",
         "src",
         "README.md",
@@ -41,9 +48,9 @@
         "build": "tsc -p tsconfig.build.json",
         "build:runtime": "npm run build",
         "build:watch": "npm run build -- --watch",
-        "changelog:generate": "git cliff --config node_modules/gitcliff-config-nick2bad4u/cliff.toml --github-repo Nick2bad4u/nick2bad4u-repo-template --output CHANGELOG.md",
-        "changelog:preview": "git cliff --config node_modules/gitcliff-config-nick2bad4u/cliff.toml --github-repo Nick2bad4u/nick2bad4u-repo-template --unreleased",
-        "changelog:release-notes": "git cliff --config node_modules/gitcliff-config-nick2bad4u/cliff.toml --github-repo Nick2bad4u/nick2bad4u-repo-template --current",
+        "changelog:generate": "git cliff --config node_modules/gitcliff-config-nick2bad4u/cliff.toml --github-repo Nick2bad4u/ncu-config-nick2bad4u --output CHANGELOG.md",
+        "changelog:preview": "git cliff --config node_modules/gitcliff-config-nick2bad4u/cliff.toml --github-repo Nick2bad4u/ncu-config-nick2bad4u --unreleased",
+        "changelog:release-notes": "git cliff --config node_modules/gitcliff-config-nick2bad4u/cliff.toml --github-repo Nick2bad4u/ncu-config-nick2bad4u --current",
         "coverage": "vitest run --coverage",
         "lint": "cross-env NODE_OPTIONS=--max_old_space_size=8192 eslint . --cache --cache-strategy content --cache-location .cache/.eslintcache",
         "lint:actions": "actionlint -config-file actionlint.yml",
@@ -54,6 +61,8 @@
         "lint:fix": "npm run lint -- --fix",
         "lint:gitleaks": "gitleaks dir --config .gitleaks.toml .",
         "lint:jscpd": "jscpd --config node_modules/jscpd-config-nick2bad4u/jscpd.json",
+        "lint:lychee": "lychee --config node_modules/lychee-config-nick2bad4u/lychee.toml .",
+        "lint:lychee:smoke": "lychee --config node_modules/lychee-config-nick2bad4u/lychee.toml --dump-inputs README.md",
         "lint:node-config": "node -e \"JSON.parse(require('node:fs').readFileSync('node.config.json','utf8')); console.log('node.config.json ok')\"",
         "lint:package": "npm run lint:package-sort && npm run lint:package-json && npm run lint:package-check",
         "lint:package:fix": "sort-package-json package.json",
@@ -75,7 +84,6 @@
         "package:check": "npm pack --dry-run",
         "release:check": "npm run release:verify",
         "release:verify": "npm run sync:node-version-files:check && npm run build && npm run lint:all && npm run test:coverage && npm run lint:package-check",
-        "setup:template": "node scripts/setup-template.mjs",
         "sync:node-version-files": "node scripts/sync-node-version-files.mjs",
         "sync:node-version-files:check": "node scripts/sync-node-version-files.mjs --check",
         "test": "vitest run",
@@ -85,10 +93,8 @@
         "types:update": "npx typesync",
         "update-actions": "actions-up --yes --style sha",
         "update-all": "npm run update-actions && npm run update-deps",
-        "update-deps": "npx ncu -i --install never && npm update --force && npm install --force && npm run sync:node-version-files",
-        "verify": "npm run release:verify",
-        "lint:lychee": "lychee --config node_modules/lychee-config-nick2bad4u/lychee.toml .",
-        "lint:lychee:smoke": "lychee --config node_modules/lychee-config-nick2bad4u/lychee.toml --dump-inputs README.md"
+        "update-deps": "ncu --configFileName .ncurc.json --configFilePath . && npm update --force && npm install --force && npm run sync:node-version-files",
+        "verify": "npm run release:verify"
     },
     "devDependencies": {
         "@arethetypeswrong/cli": "^0.18.5",
@@ -127,6 +133,9 @@
         "vite": "^8.1.4",
         "vitest": "^4.1.10",
         "yamllint-config-nick2bad4u": "^1.1.1"
+    },
+    "peerDependencies": {
+        "npm-check-updates": "^22.2.9"
     },
     "packageManager": "npm@12.0.1",
     "engines": {

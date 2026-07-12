@@ -1,56 +1,27 @@
-# Template Update Checklist
+# NCU Config Update Checklist
 
-Use this checklist when creating a new repository from this template or when refreshing the template itself.
+Use this checklist when updating npm-check-updates or changing either shared preset.
 
-## Required Per New Repository
+## Config behavior
 
-- [ ] Run `npm run setup:template -- --name <package-name> --description "<description>" --repo Nick2bad4u/<repo-name>`.
-- [ ] Replace the placeholder `src/tooling-baseline.ts` and `test/tooling-baseline.test.ts`.
-- [ ] Update `README.md` badges, description, install/use examples, and repository links.
-- [ ] Update `package.json` package name, description, keywords, exports, `files`, and publish settings.
-- [ ] Keep `.node-version`, `.nvmrc`, `package.json#engines.node`, and `packageManager` aligned.
-- [ ] Run `npm run sync:node-version-files:check` after editing Node versions.
-- [ ] Decide whether the repository is public npm package, private package, app, config package, or docs-only repository.
-- [ ] Remove npm publishing config and release workflow steps that do not apply to private or non-package repositories.
+- [ ] Compare new options and defaults with the installed NCU help, `RcOptions`, and JSON schema.
+- [ ] Keep config discovery flags out of the published rc files.
+- [ ] Confirm `.ncurc.json` keeps `workspaces: false`.
+- [ ] Confirm `.ncurc.workspaces.json` keeps `workspaces: true`, `root: true`, and `deep: false`.
+- [ ] Keep shared values identical between the presets unless the difference is workspace-specific.
+- [ ] Check that doctor/install commands are portable npm commands rather than repository-specific scripts.
 
-## Shared Config Refresh
+## Package and consumers
 
-- [ ] Run `NPM-Convert-SharedPackageConfigMigration.ps1 -Path . -SkipDependencyUpdate` after shared config packages are published.
-- [ ] Run `npm run update-deps` after confirming the shared package versions are available on npm.
-- [ ] Check `.gitleaks.toml` still extends `gitleaks-config-nick2bad4u` and keeps repository-specific allowlists.
-- [ ] Check `.npmpackagejsonlintrc.json`, `.remarkrc.mjs`, `.secretlintrc.cjs`, `.yamllint`, `stylelint.config.mjs`, `tsdoc.json`, and `typedoc.json` still point at shared configs.
-- [ ] Re-pin reusable workflow callers after updating `Nick2bad4u/workflow-templates`.
+- [ ] Keep both dotfiles in `package.json#files` and `package.json#exports`.
+- [ ] Keep the npm-check-updates peer range aligned with the oldest version verified by tests.
+- [ ] Update the typed paths/loaders and README when a preset is renamed.
+- [ ] Run the standard and workspace CLI fixture tests without network access or manifest mutation.
+- [ ] Run `npm pack --dry-run --json` and confirm both presets and built declarations are included.
 
-## GitHub Repository Settings
+## Release
 
-- [ ] Mark this repository as a template repository in GitHub settings.
-- [ ] Enable Dependabot alerts and security updates.
-- [ ] Enable secret scanning and push protection where available.
-- [ ] Configure branch protection for `main`.
-- [ ] Add required repository secrets only when the matching workflows are enabled: `NPM_TOKEN`, `CODECOV_TOKEN`, `SONAR_TOKEN`, or docs deployment tokens.
-- [ ] Confirm Codecov upload steps are wanted before requiring `CODECOV_TOKEN`.
-
-## Workflow And CI Review
-
-- [ ] Confirm every workflow has the expected trigger, `run-name`, `concurrency`, permissions, and timeout policy.
-- [ ] Confirm reusable workflow callers are pinned to an intentional full SHA.
-- [ ] Run `npm run lint:actions`.
 - [ ] Run `npm run release:verify`.
-- [ ] Review CI behavior on Linux, Windows, and macOS before using the template broadly.
-
-## Package Tooling Review
-
-- [ ] Run `npm run lint:config` to validate config-only tooling.
-- [ ] Run `npm run lint:jscpd` after adding real source files.
-- [ ] Run `npm run lint:style` after adding CSS, SCSS, or docs styles.
-- [ ] Run `npm run lint:package` before publishing.
-- [ ] Run `npm run test:coverage` after replacing placeholder tests.
-- [ ] Run `npm run changelog:preview` before cutting a release.
-
-## Before First Release
-
-- [ ] Confirm `private` is correct in `package.json`.
-- [ ] Confirm `publishConfig.provenance` and registry settings are correct.
-- [ ] Confirm package exports and declaration files match built output.
-- [ ] Confirm `npm pack --dry-run` includes only the intended files.
-- [ ] Create the first tag only after `npm run release:verify` passes locally.
+- [ ] Confirm CI, security checks, Codecov, and any configured quality gates pass for the release commit.
+- [ ] Decide semver from the published config behavior and public package API.
+- [ ] Verify the installed npm artifact can load and execute both presets from `node_modules`.

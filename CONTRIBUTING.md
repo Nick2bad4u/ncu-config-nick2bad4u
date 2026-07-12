@@ -4,7 +4,7 @@
 
 ```bash
 npm ci
-npm run setup:template -- --name my-package --description "Package description"
+npm run build
 ```
 
 ## Before Opening A Pull Request
@@ -15,5 +15,7 @@ npm run typecheck
 npm run test
 npm run package:check
 ```
+
+Changes to either NCU preset must keep the typed loader, README examples, and real CLI consumer tests aligned. Verify new options against the installed npm-check-updates schema rather than copying undocumented flags.
 
 Use the commit style documented in `.github/agent-commit-message-instructions.md`.
