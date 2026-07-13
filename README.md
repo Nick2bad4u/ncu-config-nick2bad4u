@@ -98,7 +98,7 @@ import workspaceConfig from "ncu-config-nick2bad4u/.ncurc.workspaces.json" with 
 - Enables NCU's root-config merging when consumers explicitly use deep or package-file discovery.
 - Keeps the standard and workspace behaviors separate through `workspaces: false` and `workspaces: true`.
 
-The config-location flags intentionally stay in the consuming command. NCU uses `configFileName` and `configFilePath` to find an rc file, so embedding either selector inside the file it already loaded is ineffective and non-portable.
+The config-location flags intentionally stay in the consuming command. NCU uses `configFileName` and `configFilePath` to find a rc file, so embedding either selector inside the file it already loaded is ineffective and non-portable.
 
 ## Verification
 
