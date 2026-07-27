@@ -7,6 +7,10 @@ npm ci
 npm run build
 ```
 
+npm 12 reads the reviewed lifecycle-script policy from `package.json#allowScripts`.
+Run project installs normally; do not pass `--allow-scripts`, which npm rejects
+for project-scoped installs.
+
 ## Before Opening A Pull Request
 
 ```bash

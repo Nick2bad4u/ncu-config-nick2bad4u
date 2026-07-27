@@ -12,7 +12,7 @@ The package keeps dependency-update policy in one published place and provides s
 npm install --save-dev npm-check-updates ncu-config-nick2bad4u
 ```
 
-The typed helper is ESM-only and supports Node.js `^22.22.3 || ^24.16.0 || >=26.3.0`. The presets support npm-check-updates `^22.2.9`.
+The typed helper is ESM-only and supports Node.js `^22.22.3 || ^24.16.0 || >=26.3.0`. The presets support npm-check-updates `^22.2.9 || ^23.0.0`.
 
 ## Non-workspace repositories
 
