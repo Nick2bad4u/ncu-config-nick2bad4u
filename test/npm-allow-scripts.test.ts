@@ -12,6 +12,7 @@ interface PackageLock {
 
 interface PackageManifest {
     readonly allowScripts?: Readonly<Record<string, boolean>>;
+    readonly packageManager?: string;
     readonly scripts?: Readonly<Record<string, string>>;
 }
 
@@ -36,6 +37,31 @@ const getPackageName = (packagePath: string): string => {
 };
 
 describe("npm lifecycle-script policy", () => {
+    it("pins the manifest, CI, and release workflow to the same npm version", async () => {
+        expect.assertions(3);
+
+        const manifest = (await readJson("package.json")) as PackageManifest;
+        const npmVersion = (manifest.packageManager ?? "").replace(
+            /^npm@/v,
+            ""
+        );
+        const setupNpmCommand = `npm install --global npm@${npmVersion} --ignore-scripts`;
+        const [ciWorkflow, releaseWorkflow] = await Promise.all([
+            readFile(
+                new URL("../.github/workflows/ci.yml", import.meta.url),
+                "utf8"
+            ),
+            readFile(
+                new URL("../.github/workflows/release.yml", import.meta.url),
+                "utf8"
+            ),
+        ]);
+
+        expect(npmVersion).toBe("12.0.1");
+        expect(ciWorkflow.split(setupNpmCommand)).toHaveLength(3);
+        expect(releaseWorkflow).toContain(setupNpmCommand);
+    });
+
     it("runs full dependency updates without force or legacy script flags", async () => {
         expect.assertions(3);
 

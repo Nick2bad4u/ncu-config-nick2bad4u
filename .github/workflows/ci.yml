@@ -59,6 +59,9 @@ jobs:
                   cache: "npm"
                   cache-dependency-path: "package-lock.json"
 
+            - name: "Setup npm"
+              run: "npm install --global npm@12.0.1 --ignore-scripts"
+
             - name: "Install dependencies"
               run: "npm ci"
 
@@ -146,6 +149,9 @@ jobs:
                   cache: "npm"
                   cache-dependency-path: "package-lock.json"
                   node-version-file: ".node-version"
+
+            - name: "Setup npm"
+              run: "npm install --global npm@12.0.1 --ignore-scripts"
 
             - name: "Install dependencies"
               run: "npm ci"
