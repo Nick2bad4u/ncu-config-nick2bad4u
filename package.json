@@ -110,7 +110,7 @@
         "actions-up": "^1.16.0",
         "cross-env": "^10.1.0",
         "eslint": "^10.8.0",
-        "eslint-config-nick2bad4u": "^11.0.1",
+        "eslint-config-nick2bad4u": "^15.0.0",
         "git-cliff": "^2.13.1",
         "gitcliff-config-nick2bad4u": "^1.4.0",
         "gitleaks-config-nick2bad4u": "^1.0.4",
